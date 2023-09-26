@@ -1,197 +1,129 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: Roboto, serif;
+    font-family: 'Roboto', sans-serif;
 }
 
-::selection {
-    background: #4158d0;
-    color: #fff;
-}
-
-#wrapper {
-    display: grid;
+.wrapper {
     width: 100%;
     height: 100vh;
-    place-items: center;
+    background: rgb(1,175,230);
+    background: linear-gradient(90deg, rgba(1,175,230,1) 20%, rgba(255,0,236,1) 100%);
 }
 
-#container {
+.container {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
 }
 
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%
-}
-
-.mid {
-    z-index: 1;
-    filter: blur(2px);
-}
-
-.front {
-    z-index: 2;
-}
-
-.background {
-    background-color: #5B0888;
-    height: 100vh;
+#form, .data-window {
     width: 100%;
-    overflow: hidden;
-    position: fixed;
+    min-width: 180px;
+    max-width: 340px;
+    height: 100%;
+    margin: auto;
+    flex-direction: column;
+    background: white;
+    display: flex;
+    border-radius: 35px;
+    box-shadow: 5px 5px 5px darkgray;
 }
 
-.bubble-one {
-    position: absolute;
-    width: 40vh;
-    height: 40vh;
-    left: 0;
-    top: 0;
-    background: #9D44C0;
-    filter: blur(83px);
+#form {
+    min-height: 400px;
+    max-height: 400px
 }
 
-.bubble-two {
-    position: absolute;
-    width: 40vh;
-    height: 40vh;
-    right: 0;
-    top: 0;
-    background: #942cb9;
-    filter: blur(139px);
+.data-window {
+    max-height: 200px;
 }
 
-.bubble-three {
-    position: absolute;
-    width: 40vh;
-    height: 40vh;
-    left: 0;
-    bottom: 0;
-    background: #6528F7;
-    filter: blur(114px);
-}
-
-.bubble-four {
-    position: absolute;
-    width: 40vh;
-    height: 40vh;
-    left: 70%;
-    top: 70%;
-    bottom: 0;
-    background: #B9252B;
-    filter: blur(104px);
-}
-
-.signup-form, .data-block {
+.signUp-form, .data-container {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    margin: auto;
-    overflow: hidden;
-    position: relative;
-    z-index: 3;
-    width: 30%;
-    height: 45%;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 15px 20px rgba(0,0,0,0.1);
+    gap: 10px;
+    border-radius: 35px;
+    padding: 15px;
+}
+
+.buttonContainer {
+    width: 100%;
+    min-width: 120px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .title {
-    font-size: 250%;
-    font-weight: 600;
+    border-radius: 35px 35px 0 0;
+    height: 40px;
+    font-size: 25px;
     text-align: center;
-    display: flex;
-    justify-content: center;
     flex-direction: column;
-    flex-grow: 1;
-    color: #fff;
-    user-select: none;
-    border-radius: 15px 15px 0 0;
-    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background: rgb(230,170,1);
+    background: linear-gradient(90deg, rgba(230,170,1,1) 20%, rgba(192,0,255,1) 100%);
+    color: white;
 }
 
-form, .data-container {
-    padding: 5%;
-    width: 100%;
-    flex-grow: 4;
+.label-field {
     display: flex;
+    width: 100%;
+    min-width: 150px;
+    padding-bottom: 10px;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .field {
-    height: 15%;
-    width: 100%;
-}
-
-.field input, button {
-    height: 100%;
-    width: 100%;
+    width: 80%;
+    height: 30px;
+    padding-left: 10px;
+    display: block;
+    border-radius: 35px;
     outline: none;
-    font-size: 100%;
-    padding-left: 20px;
-    border: 1px solid lightgrey;
-    border-radius: 25px;
-    transition: all 0.3s ease;
+    border: 2px solid lightgray;
+    transition: 0.5s;
 }
 
-.field input:focus,
-.field input:valid {
-    border-color: #4158d0;
+.field:hover {
+    border: 2px solid lightskyblue;
 }
 
-.errorMsg {
+.field:focus {
+    border: 2px solid deepskyblue;
+}
+
+#errorMsg {
+    display: none;
     color: red;
-    font-weight: lighter;
 }
 
 button {
-    color: #fff;
-    border: none;
     font-size: 20px;
-    font-weight: 500;
-    cursor: pointer;
-    background: linear-gradient(-135deg, #c850c0, #4158d0);
-    transition: all 0.3s ease;
+    height: 30px;
+    width: 80%;
+    border-radius: 35px;
+    display: block;
+    border: none;
+    color: white;
+    background: #D500FF;
+    transition: all 0.5s ease;
+}
+
+button:hover {
+    box-shadow: 0 0 10px magenta;
+    scale: 95%;
 }
 
 button:active {
-    transform: scale(0.95);
-}
-
-.field .login, .field .password {
-    height: 200%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-left: 20px;
-    font-size: 100%;
-}
-
-.data-container .title {
-    flex-grow: 1;
-}
-
-.data-container button {
-    flex-grow: 3;
-}
-
-particle {
-    position: fixed;
-    display: flex;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    pointer-events: none;
-    background-repeat: no-repeat;
-    background-size: contain;
+    box-shadow: 0 0 10px magenta;
+    scale: 90%;
 }
