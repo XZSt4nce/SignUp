@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.ico">
+    <title>Sign Up</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="container">
+            <div class="background">
+                <div class="bubble-one"></div>
+                <div class="bubble-two"></div>
+                <div class="bubble-three"></div>
+                <div class="bubble-four"></div>
+            </div>
+            <div class="signup-form">
+                <p class="title">
+                    Sign Up
+                </p>
+                <form id="form">
+                    <div class="field">
+                        <label for="login"></label>
+                        <input type="text" placeholder="Login" id="login" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="psw"></label>
+                        <input type="password" placeholder="Password" id="psw" required>
+                    </div>
+
+                    <div class="errorMsg">
+                        <p></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="psw-repeat"></label>
+                        <input type="password" placeholder="Repeat password" id="psw-repeat" required>
+                    </div>
+                    <div class="field">
+                        <button data-type="shadow" type="submit">Submit</button>
+                    </div>
+                    <div class="field">
+                        <button data-type="shadow" id="resetButton" type="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+            <div class="data-block">
+                <p class="title">
+                    Data
+                </p>
+                <div class="data-container">
+                    <div class="field">
+                        <label for="login-container"></label>
+                        <input id="login-container" type="text" value="Login:" class="login" readonly>
+                    </div>
+                    <div class="field">
+                        <label for="psw-container"></label>
+                        <input id="psw-container" type="text" value="Password:" class="password" readonly>
+                    </div>
+                    <div class="field">
+                        <button data-type="shadow" type="button">Clear Data</button>
+                    </div>
+                </div>
+            </div>
+            <canvas class="mid"></canvas>
+            <canvas class="front"></canvas>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
