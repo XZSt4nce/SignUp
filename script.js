@@ -1,10 +1,18 @@
 const form = document.getElementById('form');
 const dataLogin = document.getElementById('data-login');
 const dataPassword = document.getElementById('data-password');
+const loginField = document.getElementById('login');
 const passwordField = document.getElementById('psw');
 const passwordRepeatField = document.getElementById('psw-repeat');
 const clearButton = document.getElementById('clear-data');
 const errorMsg = document.getElementById('errorMsg');
+
+function glow (element, color) {
+    element.style['boxShadow'] = `0 0 20px ${color}`;
+    setTimeout(function(){
+        element.style['boxShadow'] = 'none';
+    }, 1000);
+}
 
 form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -17,33 +25,25 @@ form.addEventListener('submit', function(event) {
         dataLogin.value = "Login: " + login;
         dataPassword.value = "Password: " + password;
         errorMsg.style.display = 'none';
-
-        dataLogin.style['boxShadow'] = '0 0 20px magenta';
-        dataPassword.style['boxShadow'] = '0 0 20px magenta';
-        setTimeout(function(){
-            dataLogin.style['boxShadow'] = 'none';
-            dataPassword.style['boxShadow'] = 'none';
-        }, 1000);
+        glow(dataLogin, 'magenta');
+        glow(dataPassword, 'magenta');
     } else {
-        passwordField.style['boxShadow'] = '0 0 20px red';
-        passwordRepeatField.style['boxShadow'] = '0 0 20px red';
-        setTimeout(function(){
-            passwordField.style['boxShadow'] = 'none';
-            passwordRepeatField.style['boxShadow'] = 'none';
-        }, 1000);
+        glow(passwordField, 'red');
+        glow(passwordRepeatField, 'red');
         errorMsg.style.display = 'inline';
     }
 });
+
+form.addEventListener('reset', function() {
+    glow(loginField, 'gray');
+    glow(passwordField, 'gray');
+    glow(passwordRepeatField, 'gray');
+})
 
 clearButton.addEventListener('click', function() {
     errorMsg.style.display = 'none';
     dataLogin.value = "Login: ";
     dataPassword.value = "Password: ";
-
-    dataLogin.style['boxShadow'] = '0 0 20px red';
-    dataPassword.style['boxShadow'] = '0 0 20px red';
-    setTimeout(function(){
-        dataLogin.style['boxShadow'] = 'none';
-        dataPassword.style['boxShadow'] = 'none';
-    }, 1000);
+    glow(dataLogin, 'red');
+    glow(dataPassword, 'red');
 });
