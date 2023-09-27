@@ -14,6 +14,14 @@ function glow (element, color) {
     }, 1000);
 }
 
+function errorHidden (hidden) {
+    if (hidden) {
+        errorMsg.style.display = 'none';
+    } else {
+        errorMsg.style.display = 'inline';
+    }
+}
+
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     const data = event.target.elements;
@@ -21,27 +29,27 @@ form.addEventListener('submit', function(event) {
     const password = data['psw'].value;
     const passwordRepeat = data['psw-repeat'].value;
     if (password === passwordRepeat) {
-        console.log(login);
         dataLogin.value = "Login: " + login;
         dataPassword.value = "Password: " + password;
-        errorMsg.style.display = 'none';
+        errorHidden(true);
         glow(dataLogin, 'magenta');
         glow(dataPassword, 'magenta');
     } else {
         glow(passwordField, 'red');
         glow(passwordRepeatField, 'red');
-        errorMsg.style.display = 'inline';
+        errorHidden(false);
     }
 });
 
 form.addEventListener('reset', function() {
+    errorHidden(true);
     glow(loginField, 'gray');
     glow(passwordField, 'gray');
     glow(passwordRepeatField, 'gray');
 })
 
 clearButton.addEventListener('click', function() {
-    errorMsg.style.display = 'none';
+    errorHidden(true);
     dataLogin.value = "Login: ";
     dataPassword.value = "Password: ";
     glow(dataLogin, 'red');
