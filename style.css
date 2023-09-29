@@ -7,8 +7,6 @@
 .wrapper {
     width: 100%;
     height: 100vh;
-    background: rgb(1,175,230);
-    background: linear-gradient(90deg, rgba(1,175,230,1) 20%, rgba(255,0,236,1) 100%);
 }
 
 .container {
@@ -16,6 +14,14 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.gradient {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 #backBubble, #frontBubble {
@@ -85,8 +91,8 @@
     justify-content: center;
     display: flex;
     align-items: center;
-    background: rgb(230,170,1);
-    background: linear-gradient(90deg, rgba(230,170,1,1) 20%, rgba(192,0,255,1) 100%);
+    background: rgb(230,185,1);
+    background: linear-gradient(90deg, rgba(230,185,1,1) 0%, rgba(252,0,255,1) 100%);
     color: white;
 }
 
