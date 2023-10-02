@@ -17,7 +17,6 @@ let width = self.innerWidth;
 let height = self.innerHeight;
 let cursorX = width / 2;
 let cursorY = 0;
-let delayCounter = 0;
 
 backgroundGradient();
 setCanvasSize(backBubbles);
@@ -63,16 +62,13 @@ function Bubble(context, k) {
 
 // Отрисовка круга
 function createBubbles() {
-    if (delayCounter == 0) {
-        bubbles.push(new Bubble(backBubblesCtx, 0.5));
-        bubbles.push(new Bubble(backBubblesCtx, 0.5));
-        bubbles.push(new Bubble(backBubblesCtx, 0.5));
-        bubbles.push(new Bubble(backBubblesCtx, 0.5));
-        bubbles.push(new Bubble(midBubblesCtx, 0.75));
-        bubbles.push(new Bubble(midBubblesCtx, 0.75));
-        bubbles.push(new Bubble(frontBubblesCtx, 1));
-    }
-    //delayCounter = (delayCounter + 1) % 2;
+    bubbles.push(new Bubble(backBubblesCtx, 0.5));
+    bubbles.push(new Bubble(backBubblesCtx, 0.5));
+    bubbles.push(new Bubble(backBubblesCtx, 0.5));
+    bubbles.push(new Bubble(backBubblesCtx, 0.5));
+    bubbles.push(new Bubble(midBubblesCtx, 0.75));
+    bubbles.push(new Bubble(midBubblesCtx, 0.75));
+    bubbles.push(new Bubble(frontBubblesCtx, 1));
 }
 
 function draw() {
