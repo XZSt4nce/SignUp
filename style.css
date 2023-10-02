@@ -17,31 +17,31 @@
 }
 
 .gradient {
-    width: 100%;
+    z-index: 0;
+    width: 100vw;
     height: 100vh;
     position: absolute;
     left: 0;
     top: 0;
+    display: none;
 }
 
-#backBubble, #frontBubble {
-    width: 100%;
-    height: 100%;
+.bubble {
     position: absolute;
     left: 0;
     top: 0;
 }
 
 #backBubble {
-    z-index: 0;
-}
-
-#frontBubble {
     z-index: 1;
 }
 
-#form, .data-window {
+#frontBubble {
     z-index: 2;
+}
+
+#form, .data-window {
+    z-index: 100;
     width: 100%;
     min-width: 180px;
     max-width: 340px;
