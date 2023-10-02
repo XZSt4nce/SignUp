@@ -23,7 +23,6 @@
     position: absolute;
     left: 0;
     top: 0;
-    display: none;
 }
 
 .bubble {
@@ -34,10 +33,16 @@
 
 #backBubble {
     z-index: 1;
+    filter: blur(4px);
+}
+
+#midBubble {
+    z-index: 2;
+    filter: blur(2px);
 }
 
 #frontBubble {
-    z-index: 2;
+    z-index: 3;
 }
 
 #form, .data-window {

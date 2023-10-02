@@ -1,7 +1,9 @@
 const backBubbles = document.getElementById('backBubble');
+const midBubbles = document.getElementById('midBubble');
 const frontBubbles = document.getElementById('frontBubble');
 const bubbles = [];
 const backBubblesCtx = backBubbles.getContext('2d');
+const midBubblesCtx = midBubbles.getContext('2d');
 const frontBubblesCtx = frontBubbles.getContext('2d');
 const form = document.getElementById('form');
 const dataLogin = document.getElementById('data-login');
@@ -13,15 +15,14 @@ const clearButton = document.getElementById('clear-data');
 const errorMsg = document.getElementById('errorMsg');
 let width = self.innerWidth;
 let height = self.innerHeight;
-let cursorX = 0;
+let cursorX = width / 2;
 let cursorY = 0;
+let delayCounter = 0;
 
-document.getElementById('gradient1').style.background = 'radial-gradient(at 0 0, rgba(1, 175, 250, 1) 20%, rgba(255, 0, 256, 1))';
-document.getElementById('gradient2').style.background = `radial-gradient(at ${width}px ${width}px, rgba(230,185,1,1) 0%, rgba(170, 1, 110, 0.12))`;
-
+backgroundGradient();
 setCanvasSize(backBubbles);
+setCanvasSize(midBubbles);
 setCanvasSize(frontBubbles);
-create();
 requestAnimationFrame(draw);
 
 // Изменение ширины окна
@@ -29,6 +30,7 @@ window.addEventListener('resize', () => {
     width = self.innerWidth;
     height = self.innerHeight;
     setCanvasSize(backBubbles);
+    setCanvasSize(midBubbles);
     setCanvasSize(frontBubbles);
 });
 
@@ -49,39 +51,52 @@ function setMouseCords(event) {
     cursorY = event.clientY;
 }
 
-function Bubble(x, y) {
-    this.x = x;
-    this.y = y;
-    this.radius = Math.floor(Math.random() * (width * 0.016667 - width * 0.0083333 + 1) + width * 0.0083333);
-    this.color = '#a560e088';
+function Bubble(context, k) {
+    this.x = Math.floor(Math.random() * (self.innerWidth + 1));
+    this.y = height + width * 0.014 + 1;
+    this.context = context;
+    this.shift = Math.random() * 0.1 + 0.2;
+    this.velocity = Math.random() * 4 + 6;
+    this.radius = (Math.random() * (width * 0.007 + 1) + width * 0.007) * k;
+    this.color = '#89effa88';
 }
 
 // Отрисовка круга
-function create() {
-    const x = Math.floor(Math.random() * (self.innerWidth + 1))
-    const bubble = new Bubble(x, height);
-    bubbles.push(bubble);
+function createBubbles() {
+    if (delayCounter == 0) {
+        bubbles.push(new Bubble(backBubblesCtx, 0.5));
+        bubbles.push(new Bubble(backBubblesCtx, 0.5));
+        bubbles.push(new Bubble(backBubblesCtx, 0.5));
+        bubbles.push(new Bubble(backBubblesCtx, 0.5));
+        bubbles.push(new Bubble(midBubblesCtx, 0.75));
+        bubbles.push(new Bubble(midBubblesCtx, 0.75));
+        bubbles.push(new Bubble(frontBubblesCtx, 1));
+    }
+    //delayCounter = (delayCounter + 1) % 2;
 }
 
 function draw() {
     requestAnimationFrame(draw);
+    createBubbles();
     frontBubblesCtx.clearRect(0, 0, width, height);
+    midBubblesCtx.clearRect(0, 0, width, height);
+    backBubblesCtx.clearRect(0, 0, width, height);
     bubbles.forEach(bubble => {
-        const swing = Math.sin(bubble.y / 100);
-        const angle = (cursorX - width / 2 ) / width;
-        bubble.x += swing + angle;
-        bubble.y -= Math.random() * 2;
-        frontBubblesCtx.beginPath();
-        frontBubblesCtx.fillStyle = bubble.color;
-        frontBubblesCtx.lineWidth = 1;
-        frontBubblesCtx.arc(
+        const forceDirection = (cursorX - width / 2) * 0.2 / width;
+        const speed = width * 0.01;
+        bubble.x += forceDirection * bubble.shift * 100;
+        bubble.y -= bubble.velocity;
+        bubble.context.beginPath();
+        bubble.context.fillStyle = bubble.color;
+        bubble.context.lineWidth = 1;
+        bubble.context.arc(
             bubble.x,
             bubble.y,
             bubble.radius,
             0,
             2 * Math.PI
         );
-        frontBubblesCtx.fill();
+        bubble.context.fill();
     })
 }
 
@@ -101,8 +116,7 @@ function errorHidden (hidden) {
 }
 
 function backgroundGradient() {
-    document.getElementById('gradient1').style.background = `radial-gradient(at ${cursorY*2}px ${cursorY}px, rgba(1, 175, 250, 1) 20%, rgba(255, 0, 256, 1))`;
-    document.getElementById('gradient2').style.background = `radial-gradient(at ${width - cursorX}px ${width - cursorX / 2}px, rgba(230,185,1,1) 0%, rgba(170, 1, 110, 0.12))`;
+    document.getElementById('gradient1').style.background = `linear-gradient(${cursorX / width * 180 + cursorY / height * 180}deg, rgba(223,20,232,1) 35%, rgba(128,0,255,1) 100%)`;
 }
 
 form.addEventListener('submit', event => {
