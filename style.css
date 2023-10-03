@@ -5,7 +5,7 @@
 }
 
 .wrapper {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
 }
 
@@ -16,7 +16,7 @@
     flex-direction: column;
 }
 
-.gradient {
+#gradient {
     z-index: 0;
     width: 100vw;
     height: 100vh;
