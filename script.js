@@ -67,7 +67,7 @@ function setCanvasSize() {
 document.body.addEventListener('mousemove', (event) => {
     cursorX = event.clientX;
     cursorY = event.clientY;
-    forceDirection = (2 * cursorX / self.innerWidth / 5) - 0.2;
+    forceDirection = cursorX / self.innerWidth - 0.5;
     document.getElementById('gradient').style.background = `linear-gradient(${cursorX / self.innerWidth * 180 + cursorY / self.innerHeight * 180}deg, rgba(223,20,232,1) 35%, rgba(128,0,255,1) 100%)`;
 })
 
