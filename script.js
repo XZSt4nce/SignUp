@@ -40,6 +40,7 @@ const passwordRepeatField = document.getElementById('psw-repeat');
 const clearButton = document.getElementById('clear-data');
 const errorMsg = document.getElementById('errorMsg');
 
+let delayCounter = 0;
 let cursorX = self.innerWidth / 2;
 let cursorY = 0;
 let forceDirection = 0;
@@ -78,14 +79,17 @@ function setMouseCords(event) {
 
 // Отрисовка круга
 function createBubbles() {
-    bubbles.push(new Bubble(backBubbles, backBubblesCtx, 0.5));
-    bubbles.push(new Bubble(backBubbles, backBubblesCtx, 0.5));
-    bubbles.push(new Bubble(backBubbles, backBubblesCtx, 0.5));
+    if (delayCounter == 0) {
+        bubbles.push(new Bubble(backBubbles, backBubblesCtx, 0.5));
+        bubbles.push(new Bubble(backBubbles, backBubblesCtx, 0.5));
+        bubbles.push(new Bubble(backBubbles, backBubblesCtx, 0.5));
 
-    bubbles.push(new Bubble(midBubbles, midBubblesCtx, 0.75));
-    bubbles.push(new Bubble(midBubbles, midBubblesCtx, 0.75));
+        bubbles.push(new Bubble(midBubbles, midBubblesCtx, 0.75));
+        bubbles.push(new Bubble(midBubbles, midBubblesCtx, 0.75));
 
-    bubbles.push(new Bubble(frontBubbles, frontBubblesCtx, 1));
+        bubbles.push(new Bubble(frontBubbles, frontBubblesCtx, 1));
+    }
+    delayCounter = (delayCounter + 1) % 3;
 }
 
 function draw() {
@@ -95,6 +99,10 @@ function draw() {
     backBubblesCtx.clearRect(0, 0, self.innerWidth, self.innerHeight);
 
     bubbles.forEach(bubble => {
+        if (bubble.y < -self.innerHeight * 2) {
+            bubbles.splice(bubbles.indexOf(bubble), 1);
+            return;
+        }
         if (bubble.x < -bubble.radius) {
             bubble.x = self.innerWidth + bubble.radius - 1;
         }
