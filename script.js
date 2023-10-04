@@ -72,11 +72,6 @@ document.body.addEventListener('mousemove', (event) => {
     document.getElementById('gradient').style.background = `linear-gradient(${cursorX / self.innerWidth * 180 + cursorY / self.innerHeight * 180}deg, rgba(223,20,232,1) 35%, rgba(128,0,255,1) 100%)`;
 })
 
-function setMouseCords(event) {
-    cursorX = event.clientX;
-    cursorY = event.clientY;
-}
-
 // Отрисовка круга
 function createBubbles() {
     if (delayCounter == 0) {
