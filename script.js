@@ -1,3 +1,4 @@
+let BUBBLES = [];
 let delayCounter = 0;
 let forceDirection = 0;
 
@@ -22,62 +23,67 @@ window.addEventListener('resize', () => {
 document.body.addEventListener('mousemove', (event) => {
     forceDirection = event.clientX / self.innerWidth - 0.5;
     document.getElementById('gradient').style.background = `linear-gradient(${event.clientX / self.innerWidth * 180 + event.clientY / self.innerHeight * 180}deg, rgba(223,20,232,1) 35%, rgba(128,0,255,1) 100%)`;
-})
+});
 
-function displayBubble(canvas, k) {
-    const radiusK = Math.random();
-    bubble = {
-        'context': canvas.getContext('2d'),
-        'shift': Math.floor(Math.random() * 10 + 20),
-        'velocity': Math.random() * 4 + 6,
-        'radius': Math.floor(self.innerWidth * (radiusK + 1) * 0.007 * k + k * radiusK),
-        'x': Math.floor(Math.random() * (canvas.width + 1)),
-        'y': self.innerHeight + 30
-    };
-    const bubbleObj = Object.assign({}, bubble);
+requestAnimationFrame(function draw() {
+    document.getElementById('backBubble').getContext('2d').clearRect(0, 0, self.innerWidth, self.innerHeight);
+    document.getElementById('midBubble').getContext('2d').clearRect(0, 0, self.innerWidth, self.innerHeight);
+    document.getElementById('frontBubble').getContext('2d').clearRect(0, 0, self.innerWidth, self.innerHeight);
 
-    function drawBubble() {
+    BUBBLES.forEach((bubble, index) => {
+        if (bubble.y < -bubble.radius * 2) {
+            delete BUBBLES[index];
+            return;
+        }
+        if (bubble.x < -bubble.radius) {
+            bubble.x = self.innerWidth + bubble.radius - 1;
+        }
+        if (bubble.x > self.innerWidth + bubble.radius) {
+            bubble.x = -bubble.radius + 1;
+        }
 
-        console.log(bubbleObj);
-        // bubbleObj.context.clearRect(0, 0, self.innerWidth, self.innerHeight);
-
-        bubbleObj.context.beginPath();
-        bubbleObj.context.fillStyle = '#89effa88';
-        bubbleObj.context.arc(
-            bubbleObj.x,
-            bubbleObj.y,
-            bubbleObj.radius,
+        bubble.context.beginPath();
+        bubble.context.fillStyle = '#89effa88';
+        bubble.context.arc(
+            bubble.x,
+            bubble.y,
+            bubble.radius,
             0,
             2 * Math.PI
         );
-        bubbleObj.context.closePath();
-        bubbleObj.context.fill();
+        bubble.context.fill();
 
-        bubble.x += Math.floor(forceDirection * bubbleObj.shift);
-        bubbleObj.y -= bubbleObj.velocity;
+        bubble.x += Math.floor(forceDirection * bubble.shift);
+        bubble.y -= bubble.velocity;
+    })
+    BUBBLES = BUBBLES.filter((item) => {
+        if (item) return item;
+    })
+    requestAnimationFrame(draw);
+});
 
-        if (bubbleObj.x < -bubbleObj.radius) {
-            bubbleObj.x = self.innerWidth + bubbleObj.radius - 1;
-        }
-        if (bubbleObj.x > self.innerWidth + bubbleObj.radius) {
-            bubbleObj.x = -bubbleObj.radius + 1;
-        }
-        if (bubbleObj.y > -bubbleObj.radius) {
-            requestAnimationFrame(drawBubble);
-        }
-    }
-
-    requestAnimationFrame(drawBubble)
+function createBubble(canvas, k) {
+    const radiusK = Math.random();
+    BUBBLES.push({
+        "context": canvas.getContext('2d'),
+        "x": Math.floor(Math.random() * (canvas.width + 1)),
+        "y": self.innerHeight + 30,
+        "radius": Math.floor(self.innerWidth * (radiusK + 1) * 0.007 * k + k * radiusK),
+        "velocity": Math.random() * 4 / k + 2,
+        "shift": Math.floor(Math.random() * 10 + 5)
+    });
 }
 
-function createBubbles() {
-    displayBubble(document.getElementById('backBubble'), 0.5);
-    displayBubble(document.getElementById('midBubble'), 0.75);
-    displayBubble(document.getElementById('frontBubble'), 1);
-    requestAnimationFrame(createBubbles);
-}
+setInterval(() => {
+    createBubble(document.getElementById('backBubble'), 0.5);
+    createBubble(document.getElementById('backBubble'), 0.5);
+    createBubble(document.getElementById('backBubble'), 0.5);
 
-requestAnimationFrame(createBubbles);
+    createBubble(document.getElementById('midBubble'), 0.75);
+    createBubble(document.getElementById('midBubble'), 0.75);
+
+    createBubble(document.getElementById('frontBubble'), 1);
+}, 400);
 
 function glow (element, color) {
     element.style['boxShadow'] = `0 0 20px ${color}`;
